@@ -7,38 +7,33 @@ class Graph:
     def __init__(self):
         self.graph = defaultdict(list)
 
+    # Create LIFO structure
     def addEdge(self, u, v):
         self.graph[u].append(v)
 
-    def DFSUtil(self, v, visited, objective):
+    def aux_func(self, v, visited, objective):
 
         # Mark the current node as visited
-        # and print it
         visited.add(v)
-        print(v, end=' ')
+        print(v, end=' ')           #PRINT
 
+        # If found, stop the process
         if v == objective:
             return True
 
-        # Recur for all the vertices
-        # adjacent to this vertex
+        # Recur for all the vertices adjacent to this vertex
         for neighbour in self.graph[v]:
             if neighbour not in visited:
-                status = self.DFSUtil(neighbour, visited, objective)
-                print(" UP ")
+                status = self.aux_func(neighbour, visited, objective)
+                print(" UP ")       #PRINT
                 if status:
                     return True
 
     def DFS(self, v, objective):
-
-        # Create a set to store visited vertices
         visited = set()
+        self.aux_func(v, visited, objective)
 
-        # Call the recursive helper function
-        # to print DFS traversal
-        self.DFSUtil(v, visited, objective)
-
-# in the above diagram
+# Test drive
 if __name__ == "__main__":
     g = Graph()
     # g.addEdge(0, 1)
