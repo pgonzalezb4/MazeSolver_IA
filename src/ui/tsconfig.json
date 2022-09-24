@@ -1,0 +1,9 @@
+{
+  // https://v3.nuxtjs.org/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "strictNullChecks": true,
+    "strictFunctionTypes": false
+  }
+}

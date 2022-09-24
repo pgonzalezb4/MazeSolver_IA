@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    font-family: 'Odibee Sans';
+    
+    background-color: var(--green-background);
+    color: white;
+}
+
+:root {
+    --green-primary: #447F61;
+    --green-secondary: #11241A;
+    --green-background: #C6C38D;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 1s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
