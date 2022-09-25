@@ -34,7 +34,7 @@ class Graph:
  
 # Test drive
 if __name__ == "__main__":
-    g = Graph ();
+    g = Graph ()
     g.addEdge(0, 1)
     g.addEdge(0, 2)
     g.addEdge(1, 3)
