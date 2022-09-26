@@ -1,3 +1,4 @@
+from cmath import log
 from domain.node import Node
 
 class Graph:
@@ -45,8 +46,7 @@ class Graph:
 
         while True:
             if len(self.opened) == 0:
-                print(f'No hay solución')
-                break
+                return { 'solutionPath': [] }
 
             # Add to closed, remove from opened, organize opened by heuristic
             self.opened.sort()
@@ -54,22 +54,13 @@ class Graph:
             self.closed.append(selected_node)
 
             if (selected_node.x == target_coord[0]) and (selected_node.y == target_coord[1]):
-                print(f'Found solution!')
-                # for i in self.closed:
-                #     print(i, end=' ')
-                #     print(f'Parent: {i.parent}\n')
-                path = [(target.x, target.y)]
-                node = target.parent
-                while True:
-                    if node is None:
-                        break
-                    path.append((node.x, node.y))
-                    if node.parent is None:
-                        break
-                    node = node.parent
-                path.reverse()
-                
-                return { 'solutionPath': path }
+                solution_path = self.unwrap_path(target)
+                exploration_paths = list(map(self.unwrap_path, self.closed))
+
+                return {
+                    'solutionPath': solution_path,
+                    'explorationPaths': exploration_paths,
+                }
 
             # Examinar paths por minima euristica
             if len(selected_node.neighbors) > 0:
@@ -84,6 +75,21 @@ class Graph:
                         if new_distance < node.distance:
                             node.parent = selected_node
                             node.distance = new_distance
+    
+    def unwrap_path(self, node):
+        path = [(node.x, node.y)]
+        node = node.parent
+        while True:
+            if node is None:
+                break
+            path.append((node.x, node.y))
+            if node.parent is None:
+                break
+            node = node.parent
+        path.reverse()
+
+        return path
+
 
 # Test drive
 if __name__ == "__main__":
