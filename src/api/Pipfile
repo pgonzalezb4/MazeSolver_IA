@@ -4,11 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "==1.23.3"
 uvicorn = {extras = ["all"], version = "*"}
 fastapi = {extras = ["all"], version = "*"}
 python-multipart = "*"
-pandas = "*"
 
 [dev-packages]
 
