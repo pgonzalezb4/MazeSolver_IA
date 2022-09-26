@@ -119,6 +119,7 @@ export default {
         solutionPath,
         explorationPaths,
       };
+      mazeDrawer.nodes = [];
     },
   },
 };
