@@ -55,6 +55,11 @@ export class MazeDrawer {
       this.nodes.length < 2 &&
       this.maze[node[0]][node[1]] === MazeItem.CELL
     ) {
+      if (!this.nodes.length) {
+        this.solutionPath = [];
+        this.explorationPaths = [];
+      }
+      
       this.nodes.push(node);
       await this.draw(0);
     }
@@ -111,7 +116,7 @@ export class MazeDrawer {
           this.calculateMazePixel(MazeItem.EXPLORATION_PATH, i, j)
         );
 
-        await sleep(400 / path.length);
+        await sleep(10 / (this.maze.length * path.length * this.explorationPaths!.length));
       }
     }
 

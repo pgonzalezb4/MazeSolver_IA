@@ -3,11 +3,14 @@
     <canvas @click="onCanvasClick" class="maze-canvas" ref="canvas"> </canvas>
     <h2 class="maze-title">{{ file.name }}</h2>
     <div class="maze-menu">
-      <!-- <Button data-algorithm="dummy" @click="runSolver">SOLVE (DUMMY)</Button> -->
       <Button data-algorithm="dfs" @click="runSolver">SOLVE (DFS)</Button>
       <Button data-algorithm="bfs" @click="runSolver">SOLVE (BFS)</Button>
-      <Button data-algorithm="depth_iterative" @click="runSolver">SOLVE (DEPTH, ITERATIVE)</Button>
-      <Button data-algorithm="uniform_cost" @click="runSolver">SOLVE (UNIFORM COST)</Button>
+      <Button data-algorithm="depth_iterative" @click="runSolver"
+        >SOLVE (DEPTH, ITERATIVE)</Button
+      >
+      <Button data-algorithm="uniform_cost" @click="runSolver"
+        >SOLVE (UNIFORM COST)</Button
+      >
       <Button data-algorithm="greedy" @click="runSolver">SOLVE (GREEDY)</Button>
       <Button data-algorithm="astar" @click="runSolver">SOLVE (A*)</Button>
     </div>
@@ -89,23 +92,35 @@ export default {
       await (this.mazeDrawer as MazeDrawer).toggleNode([e.offsetX, e.offsetY]);
     },
     async runSolver(event: MouseEvent) {
-
-      const algorithm = (event.target as HTMLElement).dataset['algorithm'];
-
-      if (algorithm === 'dummy' && this.maze.length === 5) {
-        const solutionPath: Path = [[1,1], [2,1], [2, 2], [2, 3], [3, 3]];
-        const explorationPaths: Path[] = [
-          [[1,1], [2,1], [3, 1]],
-          [[1,1], [2,1], [2, 2], [2, 3], [1, 3]],
-        ];
-
-        (this.mazeDrawer as MazeDrawer).paths = {
-          solutionPath,
-          explorationPaths,
-        };
-      }
+      const mazeDrawer: MazeDrawer = this.mazeDrawer;
       
-    }
+      const algorithm = (event.target as HTMLElement).dataset["algorithm"];
+      const [start, end] = mazeDrawer.nodes;
+
+      const formData = new FormData();
+      formData.append(
+        "parameters",
+        JSON.stringify({
+          algorithm,
+          start,
+          end,
+        })
+      );
+      formData.append("file", this.file as File);
+
+      const url = new URL("/solver", useRuntimeConfig().public.apiUrl).toString();
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+
+      const { solutionPath = [], explorationPaths = [] } = await response.json();
+      mazeDrawer.paths = {
+        solutionPath,
+        explorationPaths,
+      };
+      mazeDrawer.nodes = [];
+    },
   },
 };
 </script>
@@ -133,7 +148,6 @@ export default {
     width: 35%;
   }
 }
-
 
 .maze-title {
   font-size: 1.8em;
