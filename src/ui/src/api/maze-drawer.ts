@@ -116,7 +116,7 @@ export class MazeDrawer {
           this.calculateMazePixel(MazeItem.EXPLORATION_PATH, i, j)
         );
 
-        await sleep(400 / path.length);
+        await sleep(100 / path.length);
       }
     }
 
