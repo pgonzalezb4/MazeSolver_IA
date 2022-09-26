@@ -115,12 +115,9 @@ export class MazeDrawer {
           this.canvasContext,
           this.calculateMazePixel(MazeItem.EXPLORATION_PATH, i, j)
         );
-
-        const time = 10 / (this.maze.length * path.length * this.explorationPaths!.length);
-        if (time > 1) {
-          await sleep(time);
-        }
       }
+      
+      await sleep(10 / (this.maze.length * path.length * this.explorationPaths!.length));
     }
 
     for (const [i, j] of this.solutionPath ?? []) {
