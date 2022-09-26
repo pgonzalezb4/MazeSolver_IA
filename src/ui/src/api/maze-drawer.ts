@@ -117,7 +117,7 @@ export class MazeDrawer {
         );
       }
       
-      await sleep(10 / (this.maze.length * path.length * this.explorationPaths!.length));
+      await sleep(100 / (this.maze.length * path.length * this.explorationPaths!.length));
     }
 
     for (const [i, j] of this.solutionPath ?? []) {
