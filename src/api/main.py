@@ -40,7 +40,14 @@ async def solver(file: UploadFile = File(), parameters: str = Form()):
         # TODO: Load and resolve by Greedy
         pass
     elif resolution_algorithm == 'astar':
-        # TODO: Load and resolve by AStar
-        pass
+        from algorithms.a_star import Graph as AStarGraph
+
+        g = AStarGraph()
+        for node in nodes:
+            g.add_node(node)
+        for (e1, e2) in edges:
+            g.add_edge(e1, e2)
+
+        return g.astar(node_start, node_end)
     
     return { "hello": "world" }
