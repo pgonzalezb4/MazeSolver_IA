@@ -33,11 +33,25 @@ async def solver(file: UploadFile = File(), parameters: str = Form()):
         # TODO: Load and resolve by Depth Iterative
         pass
     if resolution_algorithm == 'uniform_cost':
-        # TODO: Load and resolve by Uniform Cost
-        pass
+        from algorithms.costo_uniforme import Graph as UCSGraph
+        g = UCSGraph()
+        for node in nodes:
+            g.add_node(node)
+        for (e1, e2) in edges:
+            g.add_edge(e1, e2)
+
+        return g.UCS(node_start, node_end)
+
     if resolution_algorithm == 'greedy':
-        # TODO: Load and resolve by Greedy
-        pass
+        from algorithms.greedy import Graph as GreedyGraph
+        g = GreedyGraph()
+        for node in nodes:
+            g.add_node(node)
+        for (e1, e2) in edges:
+            g.add_edge(e1, e2)
+
+        return g.greedy(node_start, node_end)
+        
     elif resolution_algorithm == 'astar':
         from algorithms.a_star import Graph as AStarGraph
 

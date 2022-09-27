@@ -65,8 +65,7 @@ class Graph:
             # Examinar paths por minima euristica
             if len(selected_node.neighbors) > 0:
                 for node in selected_node.neighbors:
-                    new_distance = selected_node.distance + \
-                        self.distance(target, node)
+                    new_distance = selected_node.distance + self.distance(target, node)
                     if node not in self.opened and node not in self.closed:
                         node.parent = selected_node
                         node.distance = new_distance
@@ -124,4 +123,4 @@ if __name__ == "__main__":
     g.add_edge((3, 1), (3, 2))
     g.add_edge((3, 2), (3, 3))
 
-    g.astar((0, 0), (3, 2))
+    print(g.astar((0, 0), (3, 2)))

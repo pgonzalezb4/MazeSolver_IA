@@ -23,10 +23,4 @@ class Node:
 
     # Para imprimir
     def __str__(self):
-        """
-            Define that a node is printed with its value. 
-            Returns
-            -------
-                str
-        """
         return f'({self.x}, {self.y})'
