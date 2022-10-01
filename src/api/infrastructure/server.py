@@ -44,8 +44,15 @@ async def solver(file: UploadFile = File(), parameters: str = Form()):
         return g.DFS(node_start, node_end)
         
     if resolution_algorithm == 'depth_iterative':
-        # TODO: Load and resolve by Depth Iterative
-        pass
+        from algorithms.anchura import Graph as BFSGraph
+        g = BFSGraph()
+        for node in nodes:
+            g.add_node(node)
+        for (e1, e2) in edges:
+            g.add_edge(e1, e2)
+
+        return g.BFS(node_start, node_end)
+        
     if resolution_algorithm == 'uniform_cost':
         from algorithms.costo_uniforme import Graph as UCSGraph
         g = UCSGraph()
