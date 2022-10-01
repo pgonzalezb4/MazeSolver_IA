@@ -24,8 +24,15 @@ async def solver(file: UploadFile = File(), parameters: str = Form()):
     node_end = params['end']
 
     if resolution_algorithm == 'bfs':
-        # TODO: Load and resolve by BFS
-        pass
+        from algorithms.anchura import Graph as BFSGraph
+        g = BFSGraph()
+        for node in nodes:
+            g.add_node(node)
+        for (e1, e2) in edges:
+            g.add_edge(e1, e2)
+
+        return g.BFS(node_start, node_end)
+
     if resolution_algorithm == 'dfs':
         # TODO: Load and resolve by DFS
         pass
