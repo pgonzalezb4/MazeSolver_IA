@@ -34,8 +34,15 @@ async def solver(file: UploadFile = File(), parameters: str = Form()):
         return g.BFS(node_start, node_end)
 
     if resolution_algorithm == 'dfs':
-        # TODO: Load and resolve by DFS
-        pass
+        from algorithms.profundidad import Graph as DFSGraph
+        g = DFSGraph()
+        for node in nodes:
+            g.add_node(node)
+        for (e1, e2) in edges:
+            g.add_edge(e1, e2)
+
+        return g.DFS(node_start, node_end)
+        
     if resolution_algorithm == 'depth_iterative':
         # TODO: Load and resolve by Depth Iterative
         pass
