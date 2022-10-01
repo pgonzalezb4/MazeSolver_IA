@@ -8,6 +8,10 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@types/cytoscape": "^3.19.9",
     "nuxt": "3.0.0-rc.9"
+  },
+  "dependencies": {
+    "cytoscape": "^3.23.0"
   }
 }
