@@ -20,7 +20,7 @@ Below you will find a brief overview of the algorithms presented on the project.
 ## Introduction
 [(Back to top)](#table-of-contents)
 
-The intention of this project is to visualize and compare search algorithms to solve mazes by using various brute-force and heuristic algorithms. The front-end is coded in JavaScript with the Next-framework and the algorithms are implemented in Python. At the end of the document there's an explanation on how to deploy the repository locally.
+The intention of this project is to visualize and compare search algorithms to solve mazes by using various brute-force and heuristic algorithms. The front-end is coded in JavaScript with the Nuxt 3 framework and the algorithms are implemented in Python. At the end of the document there's an explanation on how to deploy the repository locally.
 
 In the code, mazes are considered trees, turned into Graphs and each individual cell is considered a node. The purpose of this is to make the coding easier to do and easier to read. Also, all the algorithms implemented in this repository are algorithms for searching a tree data structure for a node.
 
@@ -62,22 +62,61 @@ This algorithm is recursive over the depth of each dive. DFS and BFS algorithms 
 ## The UCS Algorithm
 [(Back to top)](#table-of-contents)
 
-Here is the explanation for the IDS Algorithm
+The following Algorithms were designed with `heuristic functions` which are functions that decide the path to take in a search-algorithm based on available information. The function used was the **`Manhattan Function`**, which is defined as:
+
+$$ d((a,b), (c,d)) = |a-b|+|c-d| $$
+
+for any two pair of nodes.
+
+In **`Uniform-Cost Search (UCS)`**, every time a node wants to explore it's neighbors, the lesser-value heuristic is chosen. The distance is measured as the distance between **the origin and the possible node**. The UCS algorithm guarantees the optimum solution.<br><br>
+
+<p align="center" width="100%">
+  <img align="center" src="img/ucs.gif" width="300px" height="auto">
+</p>
 
 ## The Greedy Algorithm
 [(Back to top)](#table-of-contents)
 
-Here is the explanation for the Greedy Algorithm
+In the **`Greedy Search Algorithm `**, the heuristic value is calculated as the distance between **the possible node and the objective node**. The Greedy algorithm is complete, as it always returns a solution if exists. However, it doesn't guarantee an optimal solution.<br><br>
+
+<p align="center" width="100%">
+  <img align="center" src="img/greedy.gif" width="300px" height="auto">
+</p>
 
 ## The A-Star Algorithm
 [(Back to top)](#table-of-contents)
 
-Here is the explanation for the A* Algorithm
+In the **`A* Algorithm `**, the heuristic value is a combination of the two former heuristics. It is calculated as the distance between **the possible node and the objective node** plus the distance between **the origin and the possible node**. The A* algorithm is complete and it guarantees an optimal solution.<br><br>
+
+<p align="center" width="100%">
+  <img align="center" src="img/a-star.gif" width="300px" height="auto">
+</p>
 
 ## Instalation and Dependencies
 [(Back to top)](#table-of-contents)
+As a general requirement, is is mandatory to have **`Python`** and **`Node.js`** installed.
 
-Here is the explanation on how to install
+After cloning this repository and entering the directory, follow this steps:
+
+First, enter the `src/api/` folder and execute
+
+```pip install -r requirements.txt```
+
+Then, change directory to the folder `src/ui/` and excecute
+
+```npm install```
+
+```npm run dev```
+
+After that, in another terminal open the folder `src/api/` and excecute
+
+```python main.py```
+
+Finally, open any web browser and traverse to
+
+**`localhost:3000`**
+
+to view tha app.
 
 ## Contact
 [(Back to top)](#table-of-contents)
