@@ -1,7 +1,5 @@
 <template>
   <div class="maze">
-    <canvas @click="onCanvasClick" class="maze-canvas" ref="canvas"> </canvas>
-    <h2 class="maze-title">{{ file.name }}</h2>
     <div class="maze-menu">
       <Button data-algorithm="dfs" @click="runSolver">SOLVE (DFS)</Button>
       <Button data-algorithm="bfs" @click="runSolver">SOLVE (BFS)</Button>
@@ -14,18 +12,26 @@
       <Button data-algorithm="greedy" @click="runSolver">SOLVE (GREEDY)</Button>
       <Button data-algorithm="astar" @click="runSolver">SOLVE (A*)</Button>
     </div>
+
+    <canvas @click="onCanvasClick" class="maze-canvas" ref="canvas"> </canvas>
+    <h2 class="maze-title">{{ file.name }}</h2>
+
+    <div v-show="grapher" class="tree-graph" ref="treeGraph"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { MazeDrawer, MazeItem, Path } from "@/api/maze-drawer";
 import { useDebounce } from "@/composables/use-debounce";
+import { GraphDrawer } from "../api/graph-drawer";
+import cytoscape from "cytoscape";
 
 export default {
   data() {
     return {
       maze: [] as number[][],
       mazeDrawer: null as MazeDrawer | null,
+      grapher: null as GraphDrawer | null,
     };
   },
   props: {
@@ -93,7 +99,7 @@ export default {
     },
     async runSolver(event: MouseEvent) {
       const mazeDrawer: MazeDrawer = this.mazeDrawer;
-      
+
       const algorithm = (event.target as HTMLElement).dataset["algorithm"];
       const [start, end] = mazeDrawer.nodes;
 
@@ -108,18 +114,32 @@ export default {
       );
       formData.append("file", this.file as File);
 
-      const url = new URL("/solver", useRuntimeConfig().public.apiUrl).toString();
+      const url = new URL(
+        "/solver",
+        useRuntimeConfig().public.apiUrl
+      ).toString();
       const response = await fetch(url, {
         method: "POST",
         body: formData,
       });
 
-      const { solutionPath = [], explorationPaths = [] } = await response.json();
+      const {
+        nodes = [],
+        edges = [],
+        solutionPath = [],
+        explorationPaths = [],
+      } = await response.json();
       mazeDrawer.paths = {
         solutionPath,
         explorationPaths,
       };
       mazeDrawer.nodes = [];
+
+      this.grapher = new GraphDrawer(this.$refs.treeGraph);
+
+      (this.grapher as GraphDrawer)
+        .initialize(nodes, edges, [start, end])
+        .drawPath(explorationPaths, solutionPath);
     },
   },
 };
@@ -156,11 +176,18 @@ export default {
 .maze-menu {
   display: flex;
   justify-content: center;
+  margin-block-end: 1.5em;
 
   width: 100%;
 }
 
 .maze-menu > * + * {
   margin-inline-start: 0.5em;
+}
+
+.tree-graph {
+  width: 60%;
+  aspect-ratio: 16 / 9;
+  background: white;
 }
 </style>
