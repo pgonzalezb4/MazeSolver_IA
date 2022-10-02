@@ -116,7 +116,7 @@ Finally, open any web browser and traverse to
 
 **`localhost:3000`**
 
-to view tha app.
+to view the app.
 
 ## Contact
 [(Back to top)](#table-of-contents)
