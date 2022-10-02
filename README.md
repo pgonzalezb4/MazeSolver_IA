@@ -62,9 +62,9 @@ This algorithm is recursive over the depth of each dive. DFS and BFS algorithms 
 ## The UCS Algorithm
 [(Back to top)](#table-of-contents)
 
-The following Algorithms were designed with `heuristic functions` which are functions that decide the path to take in a search-algorithm based on available information. The function used was the **`Manhattan Function`**, which is defined as:
+The following Algorithms were designed with `heuristic functions` which are functions that decide the path to take in a search-algorithm based on available information. The function used was the **`Manhattan Distance`**, which is defined as:
 
-$$ d((a,b), (c,d)) = |a-b|+|c-d| $$
+$$ d((a,b), (c,d)) = |a-c|+|b-d| $$
 
 for any two pair of nodes.
 
